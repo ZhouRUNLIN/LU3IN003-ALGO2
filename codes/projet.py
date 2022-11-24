@@ -39,13 +39,13 @@ def dist_naif_rec(x:str,y:str,i:int,j:int,c:int,dist:int):
 	dist le coût du meilleur alignement de (x, y) connu avant cet appel
 	Sortie : dist le coût du meilleur alignement de (x, y) connu après cet appel
 	"""
-	m=len(x)
-	n=len(y)
-	if m==i and n==j:
+	n=len(x)
+	m=len(y)
+	if n==i and m==j:
 		if c<dist:
 			dist=c
 	else:
-		if i<m and j<n:
+		if i<n and j<m:
 			if x[i]==y[j]:
 				cSub=0
 			elif (x[i]=='C' and y[j]=='G') or (x[i]=='G' and y[j]=='C') or (x[i]=='A' and y[j]=='T') or (x[i]=='T' and y[j]=='A'):
@@ -53,9 +53,9 @@ def dist_naif_rec(x:str,y:str,i:int,j:int,c:int,dist:int):
 			else:
 				cSub=4
 			dist=dist_naif_rec(x,y,i+1,j+1,c+cSub,dist)
-		if i<m:
+		if i<n:
 			dist=dist_naif_rec(x,y,i+1,j,c+2,dist)
-		if j<n:
+		if j<m:
 			dist=dist_naif_rec(x,y,i,j+1,c+2,dist)
 	return dist
 	
