@@ -26,37 +26,38 @@ def read_file(fileName:str):
 # exercice 6
 def dist_naif(x:str,y:str):
 	"""
-	Retourne d(X,Y) en utilisant le pseudo code donnee en exercice 6.
+	Retourne d(X,Y) en utilisant le pseudo-code donnee en exercice 6.
 	Nous initialisons dist avec 2147483647 au lieu de l'infini positif.
 	"""
 	return dist_naif_rec(x,y,0,0,0,2147483647)
 
 def dist_naif_rec(x:str,y:str,i:int,j:int,c:int,dist:int):
 	"""
-	Entrée : x et y deux mots,
-	i un indice dans [0..|x|], j un indice dans [0..|y|],
-	c le coût de l’alignement de (x[1..i],y[1..j])
-	dist le coût du meilleur alignement de (x, y) connu avant cet appel
+	Entrée : 
+		x et y sont deux mots,
+		i est un indice dans [0..|x|], j un indice dans [0..|y|],
+		c est le coût de l’alignement de (x[1..i],y[1..j])
+		dist est le coût du meilleur alignement de (x, y) connu avant cet appel
 	Sortie : dist le coût du meilleur alignement de (x, y) connu après cet appel
 	"""
-	n=len(x)
-	m=len(y)
-	if n==i and m==j:
-		if c<dist:
-			dist=c
+	n = len(x)
+	m = len(y)
+	if n == i and m == j:
+		if c < dist:
+			dist = c
 	else:
-		if i<n and j<m:
-			if x[i]==y[j]:
-				cSub=0
+		if i < n and j < m:
+			if x[i] == y[j]:
+				cSub = 0
 			elif (x[i]=='C' and y[j]=='G') or (x[i]=='G' and y[j]=='C') or (x[i]=='A' and y[j]=='T') or (x[i]=='T' and y[j]=='A'):
-				cSub=3
+				cSub = 3
 			else:
-				cSub=4
-			dist=dist_naif_rec(x,y,i+1,j+1,c+cSub,dist)
-		if i<n:
-			dist=dist_naif_rec(x,y,i+1,j,c+2,dist)
-		if j<m:
-			dist=dist_naif_rec(x,y,i,j+1,c+2,dist)
+				cSub = 4
+			dist = dist_naif_rec(x,y,i+1,j+1,c+cSub,dist)
+		if i < n:
+			dist = dist_naif_rec(x,y,i+1,j,c+2,dist)
+		if j < m:
+			dist = dist_naif_rec(x,y,i,j+1,c+2,dist)
 	return dist
 	
 
