@@ -82,4 +82,5 @@ def sol_1_rec(T:list,x:str,y:str,i:int,j:int):
 x="ATCCG"
 y="AACGT"
 T=create_T(x,y)
+print(dist_1(x,y))
 print(sol_1(T,x,y))
