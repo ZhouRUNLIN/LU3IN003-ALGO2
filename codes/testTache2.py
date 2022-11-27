@@ -22,14 +22,14 @@ listeFic={ 0: "Instances_genome/Inst_0000010_7.adn",
            4: "Instances_genome/Inst_0000012_56.adn",
            5: "Instances_genome/Inst_0000013_45.adn"
          }
-tailleMot=[10, 9, 5, 11, 12, 13]         #la création d'une liste pour stocker la taille de |x|
+ttailleMot=[5, 9, 10, 11, 12, 13]        #la création d'une liste pour stocker la taille de |x|
 cpuPercent=[]                            #la création d'une liste pour stocker la pourcentage de consommation de temps CPU
 
 for i in range(0, len(listeFic)):
     t0=time.time()
     cp=read_file(listeFic[i])
     prog_dyn(cp[2], cp[3])
-    cpu=max(psutil.cpu_percent(interval=1, percpu=True))    #lire la consommation de temps CPU
+    cpu=max(psutil.cpu_percent(interval=5, percpu=True))    #lire la consommation de temps CPU
     cpuPercent.append(cpu)
     t1=time.time()
     print("time taken for execute prog_dyn :" + (str)(t1-t0) + "\n")
