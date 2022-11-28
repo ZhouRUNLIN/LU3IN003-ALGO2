@@ -171,3 +171,55 @@ def dist_2(x:str,y:str):
                 continue
             T[i][j]=min_3(T[i-1][j]+2,T[i][j-1]+2,T[i-1][j-1]+cost_sub(x,y,i,j))
     return T[n][m]
+
+#pour tacheD ---------------------------------------------------------
+def draw_T_2(x:str,y:str):
+    """
+    Dessiner la graphe comme dist_2, mais avec les directions
+    retourne : list(list(couple(int,str)))
+    N,L,U,LU:none, left, up, left up
+    """
+    n=len(x)
+    m=len(y)
+    T=[[[0,"N"]]*(len(y)+1) for i in range(len(x)+1)]
+    for i in range(n+1):
+        for j in range(m+1):
+            if i==0 and j==0:
+                T[i][j]=[0,"N"]
+                continue
+            if i==0:
+                T[i][j]=[j*2,"L"]
+                continue
+            if j==0:
+                T[i][j]=[i*2,"U"]
+                continue
+            dist=min_3(T[i-1][j][0]+2,T[i][j-1][0]+2,T[i-1][j-1][0]+cost_sub(x,y,i,j))
+            if dist==T[i-1][j][0]+2:
+                dir="U"
+            elif dist==T[i][j-1][0]+2:
+                dir="L"
+            else:
+                dir="LU"
+            T[i][j]=[dist,dir]
+    return T
+
+def coupure(x:str,y:str,i:int):
+    """
+    Trouver l'indice de coupure associée à i
+    """
+    T=draw_T_2(x,y)
+    lc=[k for k in range(len(y)+1)]
+    lt=[0 for k in range(len(y)+1)]
+    for pi in range(i+1,len(x)+1):
+        for j in range(len(y)+1):
+            if T[pi][j][1]=="L":
+                lt[j]=lt[j-1]
+            elif T[pi][j][1]=="U":
+                lt[j]=lc[j]
+            else:
+                lt[j]=lc[j-1]
+        lc=lt
+        print(lc)
+    for l in T:
+        print(l)
+    return lt[len(y)]

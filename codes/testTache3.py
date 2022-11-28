@@ -1,5 +1,5 @@
 from projet import *
 
-x="ATCCG"
-y="AACGT"
+x="ATTGTA"
+y="ATCTTA"
 print(dist_2(x,y))
