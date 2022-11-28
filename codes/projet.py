@@ -34,11 +34,7 @@ def dist_naif(x:str,y:str):
 	Retourne d(X,Y) en utilisant le pseudo code donnee en exercice 6.
 	Nous initialisons dist avec 2147483647 au lieu de l'infini positif.
 	"""
-	t0=time.time()
-	dist=dist_naif_rec(x,y,0,0,0,2147483647)
-	t1=time.time()
-	print('Time taken for execute dist_naif : ' + (str)(t1-t0))
-	return dist
+	return dist_naif_rec(x,y,0,0,0,2147483647)
 
 def dist_naif_rec(x:str,y:str,i:int,j:int,c:int,dist:int):
 	"""
@@ -157,20 +153,19 @@ def dist_2(x:str,y:str):
     """
     n=len(x)
     m=len(y)
-    T=[[0]*(len(y)+1) for i in range(len(x)+1)]
+    T=[[0]*(m+1) for i in range(2)] #cree un tableau 2*m vide
+    for j in range(m+1):
+        T[0][j]=j*2
+
     for i in range(n+1):
+        T[1][0]=i*2
         for j in range(m+1):
-            if i==0 and j==0:
-                T[i][j]=0
-                continue
-            if i==0:
-                T[i][j]=j*2
-                continue
-            if j==0:
-                T[i][j]=i*2
-                continue
-            T[i][j]=min_3(T[i-1][j]+2,T[i][j-1]+2,T[i-1][j-1]+cost_sub(x,y,i,j))
-    return T[n][m]
+            T[1][j]=min_3(T[1][j-1]+2, T[0][j]+2, T[0][j-1]+cost_sub(x,y,i,j))
+
+        for j in range(m+1):
+           T[0][j]=T[1][j]
+
+    return T[0][m]-2
 
 #pour tacheD ---------------------------------------------------------
 def draw_T_2(x:str,y:str):
