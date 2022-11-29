@@ -88,7 +88,7 @@ def cost_sub(x:str,y:str,i:int,j:int):
 
 def dist_1(x:str,y:str):
     """
-    Calculer la distance en utilisant le psuedo code de Q12
+    Calculer la distance de x et y
     """
     n=len(x)
     m=len(y)
@@ -121,7 +121,7 @@ def create_T(x:str,y:str):
 
 def sol_1(T:list,x:str,y:str):
     """
-    Trouver l'alignement avec le plus petite distance en utilisant le psuedo code de Q16
+    Trouver l'alignement avec le plus petite distance
     """
     n=len(x)
     m=len(y)
@@ -164,7 +164,6 @@ def dist_2(x:str,y:str):
 
         for j in range(m+1):
            T[0][j]=T[1][j]
-
     return T[0][m]-2
 
 #pour tacheD ---------------------------------------------------------
@@ -227,14 +226,13 @@ def sol_2(x:str,y:str):
     Trouver l'alignement avec le plus petite distance en utilisant le psuedo code de Q24
     由于之前的假设中x比y长或等长，因此我们需要进行分支，当x比y短时我们要反向进行coupure。
     """
-    if len(x)>=len(y):
-        return sol_2x(x,y)
-    return sol_2y(x,y)
+    bool=0
+    if len(x)<=len(y): #changer le contenu de x et y 
+        bool=1
+        str=x
+        x=y
+        y=str
     
-def sol_2x(x:str,y:str):
-    """
-    le cas ou len(x)>=len(y)
-    """
     if len(x)==1 and len(y)==1:
         return (x,y)
     if len(y)==0:
@@ -245,18 +243,7 @@ def sol_2x(x:str,y:str):
     j=coupure(x,y,i)
     x1,y1=sol_2(x[0:i],y[0:j])
     x2,y2=sol_2(x[i:],y[j:])
-    return (x1+x2,y1+y2)
-
-def sol_2y(x:str,y:str):
-    """
-    le cas ou len(x)<len(y)
-    """
-    if len(y)==0:
-        return (x,word_gaps(len(x)))
-    if len(x)==0:
-        return (word_gaps(len(y)),y)
-    i=len(y)//2
-    j=coupure(y,x,i)
-    x1,y1=sol_2(x[0:j],y[0:i])
-    x2,y2=sol_2(x[j:],y[i:])
+    
+    if bool==1:
+        return(y1+y2, x1+x2)
     return (x1+x2,y1+y2)

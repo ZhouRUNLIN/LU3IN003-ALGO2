@@ -1,5 +1,5 @@
 from projet import *
-#pre-Test : pour les mots avec la taille plus grand que 17, le temp d'execution est plus que 10min
+#pre-Test : pour les mots avec la taille plus grand que 50000, le temp d'execution est plus que 10min
 
 #Initialisation
 #la liste de ficher pour tracer dans le graphe
@@ -11,8 +11,7 @@ listeFic={ 0: "Instances_genome/Inst_0000010_7.adn", 1: "Instances_genome/Inst_0
            10: "Instances_genome/Inst_0002000_44.adn", 11: "Instances_genome/Inst_0003000_45.adn",
            12: "Instances_genome/Inst_0005000_33.adn", 13: "Instances_genome/Inst_0008000_54.adn",
            14: "Instances_genome/Inst_0010000_7.adn", 15: "Instances_genome/Inst_0015000_20.adn",
-           16: "Instances_genome/Inst_0020000_77.adn", 17: "Instances_genome/Inst_0050000_6.adn",
-         }
+           16: "Instances_genome/Inst_0020000_77.adn" }
 tailleMot=[]        #la création d'une liste pour stocker la taille de |x|
 cpuTemps=[]       #la création d'une liste pour stocker la pourcentage de consommation de temps CPU
 
