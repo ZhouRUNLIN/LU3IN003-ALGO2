@@ -173,6 +173,12 @@ def dist_2(x:str,y:str):
     return T[n][m]
 
 #pour tacheD ---------------------------------------------------------
+def word_gaps(k:int):
+    """
+    Retourne "-"*k
+    """
+    return "-"*k
+
 def draw_T_2(x:str,y:str):
     """
     Dessiner la graphe comme dist_2, mais avec les directions
@@ -194,12 +200,12 @@ def draw_T_2(x:str,y:str):
                 T[i][j]=[i*2,"U"]
                 continue
             dist=min_3(T[i-1][j][0]+2,T[i][j-1][0]+2,T[i-1][j-1][0]+cost_sub(x,y,i,j))
-            if dist==T[i-1][j][0]+2:
-                dir="U"
-            elif dist==T[i][j-1][0]+2:
+            if dist==T[i][j-1][0]+2:
                 dir="L"
-            else:
+            elif dist==T[i-1][j-1][0]+cost_sub(x,y,i,j):
                 dir="LU"
+            else:
+                dir="U"
             T[i][j]=[dist,dir]
     return T
 
@@ -218,8 +224,44 @@ def coupure(x:str,y:str,i:int):
                 lt[j]=lc[j]
             else:
                 lt[j]=lc[j-1]
-        lc=lt
-        print(lc)
-    for l in T:
-        print(l)
+        lc=lt.copy()
     return lt[len(y)]
+
+def sol_2(x:str,y:str):
+    """
+    Trouver l'alignement avec le plus petite distance en utilisant le psuedo code de Q24
+    由于之前的假设中x比y长或等长，因此我们需要进行分支，当x比y短时我们要反向进行coupure。
+    """
+    if len(x)>=len(y):
+        return sol_2x(x,y)
+    return sol_2y(x,y)
+    
+def sol_2x(x:str,y:str):
+    """
+    le cas ou len(x)>=len(y)
+    """
+    if len(x)==1 and len(y)==1:
+        return (x,y)
+    if len(y)==0:
+        return (x,word_gaps(len(x)))
+    if len(x)==0:
+        return (word_gaps(len(y)),y)
+    i=len(x)//2
+    j=coupure(x,y,i)
+    x1,y1=sol_2(x[0:i],y[0:j])
+    x2,y2=sol_2(x[i:],y[j:])
+    return (x1+x2,y1+y2)
+
+def sol_2y(x:str,y:str):
+    """
+    le cas ou len(x)<len(y)
+    """
+    if len(y)==0:
+        return (x,word_gaps(len(x)))
+    if len(x)==0:
+        return (word_gaps(len(y)),y)
+    i=len(y)//2
+    j=coupure(y,x,i)
+    x1,y1=sol_2(x[0:j],y[0:i])
+    x2,y2=sol_2(x[j:],y[i:])
+    return (x1+x2,y1+y2)
