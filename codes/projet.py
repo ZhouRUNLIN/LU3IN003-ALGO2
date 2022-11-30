@@ -221,10 +221,28 @@ def coupure(x:str,y:str,i:int):
         lc=lt.copy()
     return lt[len(y)]
 
+def align_letter_word(x:str,y:str):
+    """
+    Q22
+    Etant donné y un mot de longueur 1 et x un mot non vide de longueur quelconque, renvoie un meilleur alignement de (x, y).
+    """
+    dmin=4
+    p=0
+    for i in range(len(x)):
+        if x[i]==y[0]:
+            dmin=0
+            p=i
+        elif (x[i]=='C' and y[0]=='G') or (x[i]=='G' and y[0]=='C') or (x[i]=='A' and y[0]=='T') or (x[i]=='T' and y[0]=='A'):
+            if dmin>3:
+                dmin=3
+                p=i
+    return "-"*p+y[0]+"-"*(len(x)-p-1)
+
+
 def sol_2(x:str,y:str):
     """
     Trouver l'alignement avec le plus petite distance en utilisant le psuedo code de Q24
-    由于之前的假设中x比y长或等长，因此我们需要进行分支，当x比y短时我们要反向进行coupure。
+    Dans le cas où x est plus court que y, on fait l'inverse.
     """
     bool=0
     if len(x)<=len(y): #changer le contenu de x et y 
@@ -235,10 +253,10 @@ def sol_2(x:str,y:str):
     
     if len(x)==1 and len(y)==1:
         return (x,y)
+    if len(y)==1:
+        return (x,align_letter_word(x,y))
     if len(y)==0:
         return (x,word_gaps(len(x)))
-    if len(x)==0:
-        return (word_gaps(len(y)),y)
     i=len(x)//2
     j=coupure(x,y,i)
     x1,y1=sol_2(x[0:i],y[0:j])
